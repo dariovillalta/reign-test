@@ -1,13 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,400;8..144,500&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Roboto Flex', sans-serif;
+  background-color: #fcfcfc;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Utils */
+
+.on-cursor-hover:hover{
+  cursor: pointer;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.no-padding{
+  padding: 0 !important;
+}
+
+.no-marging{
+  margin: 0 !important;
+}
+
+.border-box{
+  box-sizing: border-box;
+}
+
+/* Fonts */
+
+.regular-font {
+  font-weight: 400;
+}
+
+.medium-font {
+  font-weight: 500;
+}
+
+/* Display */
+
+.full-height{
+  height: 100% !important;
+}
+
+.full-width{
+  width: 100% !important;
+}
+
+.center-vh-flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.display-inline-block{
+  display: inline-block;
+}
+
+.vertical-align-top{
+  vertical-align: top;
+}
+
+/* Navbar */
+
+.navbar{
+  height: 7.125rem !important;
+  width: 100% !important;
+  box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
+  background-image: linear-gradient(to bottom, #ececec -32%, #fff 124%);
+}
+
+/* Body */
+
+.body-container{
+  margin: 6.12em 0 !important;
+}
+
+.timeline-option{
+  width: 6.125rem;
+  color: #606060;
+  border: solid 1px #d6d6d6;
+  z-index: 1;
+}
+
+.timeline-option.selected{
+  color: #1797ff;
+  border: solid 1px #1797ff;
+  z-index: 0;
+}
+
+.custom-select{
+  width: 15rem;
+  height: 2rem;
+  padding: 0.313rem 0.75rem 0.313rem 0.75rem;
+  border-radius: 4px;
+  border: solid 1px #2e2e2e;
+  background-color: #fff;
+}
+
+.custom-select:focus {
+  -webkit-box-shadow: 0 0 3px 1px #1797ff;
+  -moz-box-shadow: 0 0 3px 1px #1797ff;
+  box-shadow: 0 0 3px 1px #1797ff;
+}
+
+.news-tile-container{
+  height: 5.625rem;
+  margin-bottom: 1.875rem !important;
+  padding: 0 0 0 1.625rem !important;
+  border-radius: 6px;
+  border: solid 1px #979797;
+  background-color: #fff;
+}
+
+.news-tile-container-text{
+  height: 100%;
+  width: 90%;
+  padding: 0.5rem 0;
+}
+
+.news-tile-container-text-date{
+  height: 30%;
+  width: 100%;
+}
+
+.news-tile-container-text-date-clocklogo-container{
+  height: 100%;
+  width: auto;
+  margin-right: 1%;
+}
+
+.news-tile-container-text-date-clocklogo-container-flex{
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.news-tile-container-text-date-clocklogo{
+  height: 70%;
+  width: auto;
+}
+
+.news-tile-container-text-date-clocktext-container{
+  height: 100%;
+  width: 95%;
+}
+
+.news-tile-container-text-date-clocktext-container-flex{
+  height: 90%;
+  width: 100%;
+  display: flex;
+}
+
+.news-tile-container-text-date-clocktext{
+  font-size: 80%;
+  width: 100%;
+  align-self: flex-end;
+}
+
+.news-tile-container-article{
+  height: 70%;
+  width: 100%;
+}
+
+.news-tile-container-like{
+  height: 100%;
+  width: 10%;
+  background-color: rgba(96, 96, 96, 0.06);
+}
+
+.news-navigation-container{
+  height: 2rem;
+}
+
+.news-navigation-container-tile{
+  width: 2rem;
+  margin: 0 0 0 0.5rem;
+  padding-left: auto;
+  padding-right: auto;
+  padding-top: 0.375rem;
+  padding-bottom: 0.25rem;
+  border-radius: 6px;
+  border: solid 1px #d9d9d9;
+  background-color: #fff;
+  font-size: 1rem;
+}
+
+.news-navigation-container-tile.selected{
+  border: solid 1px #1797ff;
+  color: white;
+  background-color: #1797ff;
 }
