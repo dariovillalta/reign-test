@@ -1,8 +1,9 @@
 //Libraries Imports
 import React, {useEffect, useState} from 'react';
-import {totalPages} from '../../lib/api';
+import {loadArticlesInit} from '../../lib/api';
 
 //Components Imports
+import SelectQuery from './SelectQuery';
 import ArticleTile from './ArticleTile';
 import Pagination from './Pagination';
 
@@ -11,19 +12,25 @@ import Pagination from './Pagination';
 //Styles
 
 //Types
+import {NewsArticle} from '../../models/NewsArticle';
+
 type MyProps = {
 };
 
 export default function Body(props: MyProps) {
-    //const [nodes, setNodes] = useState<Node[]>(initialNodes);
+    let queryDefaultValue: string | null = localStorage.getItem('query');
+    const [query, setQuery] = useState<string>(typeof queryDefaultValue === 'string' ? queryDefaultValue : "" );
+    const [articles, setArticles] = useState<NewsArticle[]>([]);
 
     useEffect(() => {
-        const n = async () => {
-            const res = totalPages();
-            console.log('res', res);
-        }
-        n();
+        loadArticles();
     }, []);
+
+    const loadArticles = async () => {
+        const res: NewsArticle[] = (await loadArticlesInit().then(r => {return r}).catch(() => {{}}) ) as NewsArticle[];
+        setArticles(res);
+        console.log(res)
+    }
 
     return (
         <div className="row body-container">
@@ -39,15 +46,10 @@ export default function Body(props: MyProps) {
                     </div>
                 </div>
                 <div>
-                    <select className="custom-select">
-                        <option value="" disabled selected>Select your news</option>
-                        <option value={"1"}>Angular</option>
-                        <option value={"2"}>React</option>
-                        <option value={"3"}>Vuejs</option>
-                    </select>
+                    <SelectQuery defaultValue={query} changeDefaultValue={setQuery}/>
                 </div>
                 <div className="news-container">
-                    <ArticleTile articles={[]}/>
+                    <ArticleTile articles={articles}/>
                     <div className="news-navigation-container center-vh-flex">
                         <Pagination totalPages={10}/>
                     </div>

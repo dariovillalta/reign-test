@@ -1,25 +1,21 @@
+import {NewsArticle} from '../models/NewsArticle';
 const axios = require('axios').default;
 
-type NewsArticle = {
-    id: number,
-    created_at: string,
-    author: string,
-    title: string,
-    url: string,
-    text: string,
-    points: number,
-    parent_id: number,
-    children: NewsArticle[]
+interface ResponseObject {
+    hits: NewsArticle[]
+}
+
+interface Response {
+    data: ResponseObject
 }
 
 //const url: String = "http://hn.algolia.com/api/v1/search_by_date?query=";
-const url: String = "http://hn.algolia.com/api/v1/search_by_date?tags=story";
+const urlLatest: String = "http://hn.algolia.com/api/v1/search_by_date?tags=story";
 
-export async function totalPages (): Promise<NewsArticle[]> {
+export async function loadArticlesInit (): Promise<NewsArticle[]> {
     try {
-        const newsArticle: NewsArticle[] = await axios.get(url);
-        console.log('newsArticle', newsArticle)
-        return newsArticle;
+        const newsArticle: Response = await axios.get(urlLatest);
+        return newsArticle.data.hits;
     } catch (error) {
         console.log('error', error);
         return [];
