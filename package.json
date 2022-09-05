@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest --watchAll --verbose",
+    "test": "jest --watchAll --verbose --env=jsdom",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -44,6 +44,16 @@
     ]
   },
   "devDependencies": {
-    "react-test-renderer": "^18.2.0"
+    "jest-localstorage-mock": "^2.4.22"
+  },
+  "jest": {
+    "resetMocks": false,
+    "setupFiles": [
+      "jest-localstorage-mock"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/mocks/fileMock.js"
+    }
   }
 }

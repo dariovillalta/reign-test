@@ -7,5 +7,6 @@ export type NewsArticle = {
     text: string,
     points: number,
     parent_id: number,
-    children: NewsArticle[]
+    children: NewsArticle[],
+    totalPages?: number
 };

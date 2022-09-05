@@ -1,5 +1,5 @@
 //Libraries Imports
-import {useEffect, useState} from 'react';
+import React from 'react';
 
 //Other Imports
 import clock from"../../date.svg";
@@ -23,7 +23,7 @@ export default function SelectQuery(props: MyProps) {
     }
 
     return (
-        <select className="custom-select" defaultValue={props.defaultValue} onChange={changeQuery}>
+        <select className="custom-select" defaultValue={props.defaultValue} onChange={changeQuery} aria-label="framework" name="framework">
             <option value="" disabled>Select your news</option>
             <option value="angular">Angular</option>
             <option value="reactjs">React</option>
