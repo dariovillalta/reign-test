@@ -29,7 +29,9 @@ export async function loadArticlesInit (page?: number, framework?: string): Prom
                 newsArticleTemp = (await getArticles(currentPage, framework).then(r => {return r}).catch(() => {{}}) ) as NewsArticle[];
         }
         currentPage--;
-        newsArticle.data.hits[0].totalPages = currentPage;
+        for (let index = 0; index < newsArticle.data.hits.length; index++) {
+            newsArticle.data.hits[index].totalPages = currentPage;
+        }
         return newsArticle.data.hits;
     } catch (error) {
         console.log('error', error);

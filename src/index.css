@@ -142,8 +142,8 @@ body {
 
 .news-tile-container-text-date-clocklogo-container{
   height: 100%;
-  width: auto;
-  margin-right: 1%;
+  width: 5%;
+  margin-right: 0.5%;
 }
 
 .news-tile-container-text-date-clocklogo-container-flex{
@@ -159,7 +159,7 @@ body {
 
 .news-tile-container-text-date-clocktext-container{
   height: 100%;
-  width: 95%;
+  width: 90%;
 }
 
 .news-tile-container-text-date-clocktext-container-flex{

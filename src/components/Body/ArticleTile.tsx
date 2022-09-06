@@ -13,7 +13,9 @@ import unlike from"../../unlike.svg";
 import {NewsArticle} from '../../models/NewsArticle';
 
 type MyProps = {
-    articles: NewsArticle[]
+    articles: NewsArticle[],
+    filterLiked: boolean,
+    onLikeChange: (index: number) => void
 };
 
 export default function ArticleTile(props: MyProps) {
@@ -47,40 +49,41 @@ export default function ArticleTile(props: MyProps) {
         window.open(url, '_blank', 'noopener,noreferrer');
     };
 
-    const pressLike = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const pressLike = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, index: number) => {
         e.stopPropagation();
-        console.log('1')
+        props.onLikeChange(index);
     };
 
     const articleTiles = () => props.articles.map((article, index) => {
-        return  <div className="col-12 col-md-6 news-tile-container no-padding" onClick={() => openInNewTab(article.url)} key={article.objectID}>
-                    <div className="news-tile-container-text display-inline-block vertical-align-top">
-                        <div className="news-tile-container-text-date">
-                            <div className="display-inline-block news-tile-container-text-date-clocklogo-container vertical-align-top">
-                                <div className="full-width full-height center-vh-flex">
-                                    <img src={clock} className="news-tile-container-text-date-clocklogo"/>
+        if(!props.filterLiked || (props.filterLiked && article.liked))
+            return  <div className="col-12 col-md-6 news-tile-container no-padding" onClick={() => openInNewTab(article.url!==null && article.url!==undefined && article.url.length>0 ? article.url : article.story_url!==null && article.story_url!==undefined && article.story_url.length>0 ? article.story_url : '_blank')} key={article.objectID}>
+                        <div className="news-tile-container-text display-inline-block vertical-align-top">
+                            <div className="news-tile-container-text-date">
+                                <div className="display-inline-block news-tile-container-text-date-clocklogo-container vertical-align-top">
+                                    <div className="full-width full-height center-vh-flex">
+                                        <img src={clock} className="news-tile-container-text-date-clocklogo"/>
+                                    </div>
+                                </div>
+                                <div className="display-inline-block news-tile-container-text-date-clocktext-container vertical-align-top">
+                                    <div className="news-tile-container-text-date-clocktext-container-flex">
+                                        <p className="news-tile-container-text-date-clocktext no-marging">{timeSince(new Date(article.created_at)) +" ago by " + article.author}</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="display-inline-block news-tile-container-text-date-clocktext-container vertical-align-top">
-                                <div className="news-tile-container-text-date-clocktext-container-flex">
-                                    <p className="news-tile-container-text-date-clocktext no-marging">{timeSince(new Date(article.created_at)) +" ago by " + article.author}</p>
-                                </div>
+                            <div className="news-tile-container-article">
+                                <p className="medium-font">{
+                                    article.title!==null && article.title!==undefined && article.title.length>0
+                                    ?   article.title
+                                    :   article.story_title
+                                }</p>
                             </div>
                         </div>
-                        <div className="news-tile-container-article">
-                            <p className="medium-font">{
-                                article.title!==null && article.title!==undefined && article.title.length>0
-                                ?   article.title
-                                :   article.story_title
-                            }</p>
+                        <div className="news-tile-container-like display-inline-block vertical-align-top" onClick={(e) => pressLike(e, index)}>
+                            <div className="full-height full-width center-vh-flex">
+                                <img src={article.liked ? like : unlike} className=""/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="news-tile-container-like display-inline-block vertical-align-top" onClick={(e) => pressLike(e)}>
-                        <div className="full-height full-width center-vh-flex">
-                            <img src={article.liked ? like : unlike} className=""/>
-                        </div>
-                    </div>
-                </div>;
+                    </div>;
     });
 
     return (
