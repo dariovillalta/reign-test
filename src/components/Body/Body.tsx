@@ -1,6 +1,6 @@
 //Libraries Imports
 import React, {useEffect, useState} from 'react';
-import {loadArticlesInit} from '../../lib/api';
+import {loadArticlesInit, getArticles} from '../../lib/api';
 
 //Components Imports
 import SelectQuery from './SelectQuery';
@@ -21,11 +21,25 @@ export default function Body(props: MyProps) {
     let queryDefaultValue: string | null = localStorage.getItem('query');
     const [query, setQuery] = useState<string>(typeof queryDefaultValue === 'string' ? queryDefaultValue : "" );
     const [articles, setArticles] = useState<NewsArticle[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(1);
 
     useEffect(() => {
         loadArticles();
     }, []);
+
+    useEffect(() => {
+        console.log('articles', articles);
+    }, [articles]);
+
+    useEffect(() => {
+        console.log('query', query);
+    }, [articles]);
+
+    useEffect(() => {
+        if(query!==undefined && query.length>0 && currentPage!==undefined)
+            getPage(currentPage);
+    }, [query, currentPage]);
 
     const loadArticles = async () => {
         const res: NewsArticle[] = (await loadArticlesInit().then(r => {return r}).catch(() => {{}}) ) as NewsArticle[];
@@ -34,19 +48,20 @@ export default function Body(props: MyProps) {
         if(totalPagesTemp !== undefined) {
             setTotalPages(totalPagesTemp);
         }
-        console.log(res)
-        console.log(totalPagesTemp)
     }
 
     const getPage = async (page: number) => {
-        const res: NewsArticle[] = (await loadArticlesInit().then(r => {return r}).catch(() => {{}}) ) as NewsArticle[];
+        const res: NewsArticle[] = (await getArticles(page, query).then(r => {return r}).catch(() => {{}}) ) as NewsArticle[];
         setArticles(res);
-        let totalPagesTemp: number = res[0].totalPages as number;
-        if(totalPagesTemp !== undefined) {
-            setTotalPages(totalPagesTemp);
-        }
-        console.log(res)
-        console.log(totalPagesTemp)
+    }
+
+    const changePage = (page: number): void => {
+        getPage(page);
+        setCurrentPage(page);
+    }
+
+    const filterNulls = (article: NewsArticle) => {
+        //return article.story_title!==null && article.story_url!==null;
     }
 
     return (
@@ -68,7 +83,7 @@ export default function Body(props: MyProps) {
                 <div className="news-container">
                     <ArticleTile articles={articles}/>
                     <div className="news-navigation-container center-vh-flex">
-                        <Pagination totalPages={totalPages}/>
+                        <Pagination totalPages={totalPages} currentPage={currentPage} paginationSize={7} changePage={changePage}/>
                     </div>
                 </div>
             </div>
